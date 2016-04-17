@@ -43,11 +43,13 @@
     <div class='article'>
         <div class="content-title">
             <h1>Simultaneous Localization and Mapping</h1>
-Apr. 16 2016
+            <div class= "well small">
+            Apr. 16 2016
 
-by <a class="url fn" href="https://wacoder.github.io/">wacoder</a>
+            by <a class="url fn" href="https://wacoder.github.io/">wacoder</a>
 
-Tags <a href="https://wacoder.github.io/tag/bayesian_estimation.html">Bayesian Estimation</a>
+            Tags <a class="url fn" href="https://wacoder.github.io/tag/bayesian_estimation.html">Bayesian Estimation</a>
+            </div>
 </div>
 
 <div><p>The simultaneous localization and mapping (SLAM) problem asks if it is possible for a mobile robot to be placed at unknown location in an unknown environment and for the robot to incrementally build a consistent map of this environment while simultaneously determining its location within this map.</p>
@@ -99,8 +101,13 @@ be computed for all time <span class="math">\(k\)</span>. In general, a recursiv
     <div class="math">\begin{equation}\label{Eqn:ob_model}
       P(z_k|x_k,m),
     \end{equation}</div>
+</p>
+<p>
+  The <i>motion model</i> for the vehicle can be described in terms of probablity distribution on state transitions in the form
 
-be
+
+
+
 where <span class="math">\(\textbf{w}=[w_1,w_2,...,w_M]^T\)</span> is the weighting vector to be learned. Given the constraint that <span class="math">\(p(y=1|\textbf{x})+p(y=-1|\textbf{x})=1\)</span>, it follows that
 </p>
 <div class="math">\begin{equation} \label{Eqn:Prob_Binary}
