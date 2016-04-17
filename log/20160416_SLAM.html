@@ -1,0 +1,273 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Wacoder&#39;s Blog by wacoder</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="description" content="" />
+
+<meta name="keywords" content="">
+
+<meta property="og:locale" content="en-EN">
+
+
+<meta property="og:type" content="website" />
+
+      <link href="https://wacoder.github.io/theme/bootstrap.min.css" rel="stylesheet">
+      <link href="https://wacoder.github.io/theme/bootstrap.min.responsive.css" rel="stylesheet">
+      <link href="https://wacoder.github.io/theme/local.css" rel="stylesheet">
+      <link href="https://wacoder.github.io/theme/pygments.css" rel="stylesheet">
+      <link href='https://fonts.googleapis.com/css?family=Merriweather:300%7CRaleway%7COpen+Sans' rel='stylesheet' type='text/css'>
+      <link rel="stylesheet" href="https://wacoder.github.io/theme/font-awesome.min.css">
+      <link rel="stylesheet" href="https://wacoder.github.io/theme/style.css">
+      <link rel="stylesheet" href="https://wacoder.github.io/theme/tomorrow.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+<body>
+
+
+<div class="container">
+    <div class="content">
+    <div class="row">
+
+        <div class="span9">
+    <div class='article'>
+        <div class="content-title">
+            <h1>Simultaneous Localization and Mapping</h1>
+Apr. 16 2016
+
+by <a class="url fn" href="https://wacoder.github.io/">wacoder</a>
+
+Tags <a href="https://wacoder.github.io/tag/bayesian_estimation.html">Bayesian Estimation</a>
+</div>
+
+<div><p>The simultaneous localization and mapping (SLAM) problem asks if it is possible for a mobile robot to be placed at unknown location in an unknown environment and for the robot to incrementally build a consistent map of this environment while simultaneously determining its location within this map.</p>
+<h3>Formulation and Structure of the SLAM Problem<sup id="fnref:1"><a class="footnote-ref" href="#fn:1" rel="footnote">1</a></sup></h3>
+
+<p></p>
+<h4> Preliminaries</h4>
+<p> Consider a mobile robot moving through an environment taking relative observation of a number of unknown landmarks using a sensor located on the robot. At a time instant k, the following quantities are defined.
+  <table class="table">
+      <tbody>
+          <tr>
+          <td><span class="math">\(x_k\)</td> <td>the state vector describing the location and orientation of the vehicle</td>
+          </tr>
+                <td><span class="math">\(u_k\)</td> <td>the control vector, applied at time <span class="math">\(k-1\) to drive the vehicle to a state <span class="math">\(x_k\) at time
+                <span class="math">\(k\) </td>
+          <tr>
+            <td><span class="math">\(m_i\)</td> <td>a vector describing the location of the <span class="math">\(i\)th landmark whose true location is assumed time invariant</td>
+          </tr>
+          <tr>
+            <td><span class="math">\(z_{ik}\)</td> <td>an observation taken from the vehicle of the location of <span class="math">\(i\)th landmark at time <span class="math">\(k\)</td>
+          </tr>
+
+          <tr>
+            <td><span class="math">\(\textbf{X}_{0:k}=\{x_0, x_1,\dots,x_k\}\)</td> <td>an observation taken from the vehicle of the location of <span class="math">\(i\)th landmark at time <span class="math">\(k\)</td>
+          </tr>
+
+      </tbody>
+  </table>
+<p>Let us start with the binary case. For an M-dimensional feature vector <span class="math">\(\textbf{x}=[x_1,x_2,...,x_M]^T\)</span>, the posterior probability of class <span class="math">\(y\in\{\pm{1}\}\)</span> given <span class="math">\(\textbf{x}\)</span> is assumed to satisfy
+</p>
+<div class="math">\begin{equation}
+\ln{\frac{p(y=1|\textbf{x})}{p(y=-1|\textbf{x})}}=\textbf{w}^T\textbf{x},
+\end{equation}</div>
+<p>
+where <span class="math">\(\textbf{w}=[w_1,w_2,...,w_M]^T\)</span> is the weighting vector to be learned. Given the constraint that <span class="math">\(p(y=1|\textbf{x})+p(y=-1|\textbf{x})=1\)</span>, it follows that
+</p>
+<div class="math">\begin{equation} \label{Eqn:Prob_Binary}
+p(y|\textbf{x})=\frac{1}{1+\exp(-y\textbf{w}^T\textbf{x})}=\sigma(y\textbf{w}^T\textbf{x}),
+\end{equation}</div>
+<p>
+in which we can observe the logistic sigmoid function <span class="math">\(\sigma(a)=\frac{1}{1+\exp(-a)}\)</span>.</p>
+<p>Based on the assumptions above, the weighting vector, <span class="math">\(\textbf{w}\)</span>, can be learned by maximum likelihood estimation (MLE). More specifically, given training data set <span class="math">\(\mathcal{D}=\{(\textbf{x}_1,y_1),(\textbf{x}_2,y_2),...,(\textbf{x}_N,y_N)\}\)</span>,
+</p>
+<div class="math">\begin{align}
+\begin{aligned}
+\textbf{w}^*&amp;=\max_{\textbf{w}}{\mathcal{L}(\textbf{w})}\\
+&amp;=\max_{\textbf{w}}{\sum_{i=1}^N\ln{{p(y_i|\textbf{x}_i)}}}\\
+&amp;=\max_{\textbf{w}}{\sum_{i=1}^N{\ln{\frac{1}{1+\exp(-y_i\textbf{w}^T\textbf{x}_i)}}}}\\
+&amp;=\min_{\textbf{w}}{\sum_{i=1}^N{\ln{(1+\exp(-y_i\textbf{w}^T\textbf{x}_i))}}}.
+\end{aligned}
+\end{align}</div>
+<p>
+We have a convex objective function here, and we can calculate the optimal solution by applying gradient descent. The gradient can be drawn as
+</p>
+<div class="math">\begin{align}
+\begin{aligned}
+\nabla{\mathcal{L}(\textbf{w})}&amp;=\sum_{i=1}^N{\frac{-y_i\textbf{x}_i\exp(-y_i\textbf{w}^T\textbf{x}_i)}{1+\exp(-y_i\textbf{w}^T\textbf{x}_i)}}\\
+&amp;=-\sum_{i=1}^N{y_i\textbf{x}_i(1-p(y_i|\textbf{x}_i))}.
+\end{aligned}
+\end{align}</div>
+<p>
+Then, we can learn the optimal <span class="math">\(\textbf{w}\)</span> by starting with an initial <span class="math">\(\textbf{w}_0\)</span> and iterating as follows:
+</p>
+<div class="math">\begin{equation} \label{Eqn:Iteration_Binary}
+\textbf{w}_{t+1}=\textbf{w}_{t}-\eta_t\nabla{\mathcal{L}(\textbf{w})},
+\end{equation}</div>
+<p>
+where <span class="math">\(\eta_t\)</span> is the learning step size. It can be invariant to time, but time-varying step sizes could potential reduce the convergence time, e.g., setting <span class="math">\(\eta_t\propto{1/\sqrt{t}}\)</span> such that the step size decreases with an increasing time <span class="math">\(t\)</span>.</p>
+<h3>Multiclass Logistic Regression Classifier<sup id="fnref:1"><a class="footnote-ref" href="#fn:1" rel="footnote">1</a></sup></h3>
+<p>When it is generalized to multiclass case, the logistic regression model needs to adapt accordingly. Now we have <span class="math">\(K\)</span> possible classes, that is, <span class="math">\(y\in\{1,2,..,K\}\)</span>. It is assumed that the posterior probability of class <span class="math">\(y=k\)</span> given <span class="math">\(\textbf{x}\)</span> follows
+</p>
+<div class="math">\begin{equation}
+\ln{p(y=k|\textbf{x})}\propto\textbf{w}_k^T\textbf{x},
+\end{equation}</div>
+<p>
+where <span class="math">\(\textbf{w}_k\)</span> is a column weighting vector corresponding to class <span class="math">\(k\)</span>. Considering all classes <span class="math">\(k=1,2,...,K\)</span>, we would have a weighting matrix that includes all <span class="math">\(K\)</span> weighting vectors. That is, <span class="math">\(\textbf{W}=[\textbf{w}_1,\textbf{w}_2,...,\textbf{w}_K]\)</span>.
+Under the constraint
+</p>
+<div class="math">\begin{equation}
+\sum_{k=1}^K{p(y=k|\textbf{x})}=1,
+\end{equation}</div>
+<p>
+it then follows that
+</p>
+<div class="math">\begin{equation} \label{Eqn:Prob_Multiple}
+p(y=k|\textbf{x})=\frac{\exp(\textbf{w}_k^T\textbf{x})}{\sum_{j=1}^K{\exp(\textbf{w}_j^T\textbf{x})}}.
+\end{equation}</div>
+<p>The weighting matrix, <span class="math">\(\textbf{W}\)</span>, can be similarly learned by maximum likelihood estimation (MLE). More specifically, given training data set <span class="math">\(\mathcal{D}=\{(\textbf{x}_1,y_1),(\textbf{x}_2,y_2),...(\textbf{x}_N,y_N)\}\)</span>,
+</p>
+<div class="math">\begin{align}
+\begin{aligned}
+\textbf{W}^*&amp;=\max_{\textbf{W}}{\mathcal{L}(\textbf{W})}\\
+&amp;=\max_{\textbf{W}}{\sum_{i=1}^N\ln{{p(y_i|\textbf{x}_i)}}}\\
+&amp;=\max_{\textbf{W}}{\sum_{i=1}^N{\ln{\frac{\exp(\textbf{w}_{y_i}^T\textbf{x})}{\sum_{j=1}^K{\exp(\textbf{w}_j^T\textbf{x})}}}}}.
+\end{aligned}
+\end{align}</div>
+<p>
+The gradient of the objective function with respect to each <span class="math">\(\textbf{w}_k\)</span> can be calculated as
+</p>
+<div class="math">\begin{align}
+\begin{aligned}
+\frac{\partial{\mathcal{L}(\textbf{W})}}{\partial{\textbf{w}_k}}&amp;=\sum_{i=1}^N{\textbf{x}_i\left(I(y_i=k)-\frac{\exp(\textbf{w}_k^T\textbf{x})}{\sum_{j=1}^K{\exp(\textbf{w}_j^T\textbf{x})}}\right)}\\
+&amp;=\sum_{i=1}^N{\textbf{x}_i(I(y_i=k)-p(y_i=k|\textbf{x}_i))},
+\end{aligned}
+\end{align}</div>
+<p>
+where <span class="math">\(I(\cdot)\)</span> is a binary indicator function. Applying gradient descent, the optimal solution can be obtained by iterating as follows:
+</p>
+<div class="math">\begin{equation}\label{Eqn:Iteration_Multiple}
+\textbf{w}_{k,t+1}=\textbf{w}_{k,t}+\eta_{t}\frac{\partial{\mathcal{L}(\textbf{W})}}{\partial{\textbf{w}_k}}.
+\end{equation}</div>
+<p>
+Note that we have "<span class="math">\(+\)</span>" in (\ref{Eqn:Iteration_Multiple}) instead of "<span class="math">\(-\)</span>" in (\ref{Eqn:Iteration_Binary}), because the maximum likelihood estimation in the binary case is eventually converted to a minimization problem, while here we keep performing maximization.</p>
+<h3>How to Perform Predictions?</h3>
+<p>Once the optimal weights are learned from the logistic regression model, for any new feature vector <span class="math">\(\textbf{x}\)</span>, we can easily calculate the probability that it is associated to each class label <span class="math">\(k\)</span> by (\ref{Eqn:Prob_Binary}) in the binary case or (\ref{Eqn:Prob_Multiple}) in the multiclass case. With the probabilities for each class label available, we can then perform:</p>
+<ul>
+<li>a hard decision by identifying the class label with the highest probability, or</li>
+<li>a soft decision by showing the top <span class="math">\(k\)</span> most probable class labels with their corresponding probabilities.</li>
+</ul>
+
+<h3>An Example Applying Multiclass Logistic Regression</h3>
+<p>To see an example applying multiclass logistic regression classification, <a href="https://github.com/stlong0521/logistic-classification">click here</a> for more information.</p>
+
+<h3>References</h3>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>C. M. Bishop, <em>Pattern Recognition and Machine Learning</em>. New York: Springer, 2006.&#160;<a class="footnote-backref" href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    var location_protocol = (false) ? 'https' : document.location.protocol;
+    if (location_protocol !== 'http' && location_protocol !== 'https') location_protocol = 'https:';
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = location_protocol + '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' }, Macros: {} }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script></div>
+
+
+    </div>
+        </div>
+
+        <div class="span3">
+
+            <div class="well" style="padding: 8px 0; background-color: #FFFFFF;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                Site Map
+                </li>
+
+              </div>
+              <nav class="container title h2-like">
+              <a href="https://wacoder.github.io/" title="all posts">Home</a>
+              </nav>
+
+
+              <nav class="container title h2-like">
+              <a href="https://wacoder.github.io/archives.html" title="all posts">Archives</a>
+              </nav>
+              <nav class="container title h2-like">
+              <a href="https://wacoder.github.io/tags.html" title="Categories">Tags</a>
+              </nav>
+
+            </ul>
+            </div>
+        </div>
+    </div>     </div>
+
+</div> <!-- /container -->
+</body>
+</html>
