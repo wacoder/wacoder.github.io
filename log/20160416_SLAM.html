@@ -71,17 +71,36 @@ Tags <a href="https://wacoder.github.io/tag/bayesian_estimation.html">Bayesian E
           </tr>
 
           <tr>
-            <td><span class="math">\(\textbf{X}_{0:k}=\{x_0, x_1,\dots,x_k\}\)</td> <td>an observation taken from the vehicle of the location of <span class="math">\(i\)th landmark at time <span class="math">\(k\)</td>
+            <td><span class="math">\(\textbf{X}_{0:k}=\{x_0, x_1,\dots,x_k\}\)</td> <td>the history of vehicle locations</td>
+          </tr>
+
+          <tr>
+            <td><span class="math">\(\textbf{U}_{0:k}=\{u_0, u_1,\dots,u_k\}\)</td> <td>the history of control inputs</td>
+          </tr>
+
+          <tr>
+            <td><span class="math">\(\textbf{m}=\{m_1, m_2,\dots,m_n\}\)</td> <td>the set of all landmarks</td>
+          </tr>
+
+          <tr>
+            <td><span class="math">\(\textbf{Z}_{0:k}=\{z_1, z_2,\dots,z_k\}\)</td> <td>the set of all landmark observations</td>
           </tr>
 
       </tbody>
   </table>
-<p>Let us start with the binary case. For an M-dimensional feature vector <span class="math">\(\textbf{x}=[x_1,x_2,...,x_M]^T\)</span>, the posterior probability of class <span class="math">\(y\in\{\pm{1}\}\)</span> given <span class="math">\(\textbf{x}\)</span> is assumed to satisfy
+<p>In probabilistic form, this simultaneous localization and mapping (SLAM) problem requires that the probability distribution
 </p>
 <div class="math">\begin{equation}
-\ln{\frac{p(y=1|\textbf{x})}{p(y=-1|\textbf{x})}}=\textbf{w}^T\textbf{x},
+P(x_k,m|\textbf{Z}_{0:k}, \textbf{U}_{0:k}, x_0),
 \end{equation}</div>
+be computed for all time <span class="math">\(k\)</span>. In general, a recursive solution to the SLAM problem is desirable. Starting with an estimate for the distribution <span class="math">\(P(x_{k-1}, m|\textbf{Z}_{0:k-1}, \textbf{U}_{0:k-1})\) at time <span class="math">\(k-1\), the joint posterior, following a control <span class="math">\(u_k\) and observation <span class="math">\(z_k\), is computed using Bayes theorem.
 <p>
+  The <i>observation model</i> describes the probablity of making an observations <span class="math">\(z_k\) when the vehicle location and landmark locations are known and is generally described in the form
+    <div class="math">\begin{equation}\label{Eqn:ob_model}
+      P(z_k|x_k,m),
+    \end{equation}</div>
+
+be
 where <span class="math">\(\textbf{w}=[w_1,w_2,...,w_M]^T\)</span> is the weighting vector to be learned. Given the constraint that <span class="math">\(p(y=1|\textbf{x})+p(y=-1|\textbf{x})=1\)</span>, it follows that
 </p>
 <div class="math">\begin{equation} \label{Eqn:Prob_Binary}
