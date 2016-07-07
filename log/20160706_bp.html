@@ -1,0 +1,177 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Wacoder&#39;s Blog by wacoder</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="description" content="" />
+
+<meta name="keywords" content="">
+
+<meta property="og:locale" content="en-EN">
+
+
+<meta property="og:type" content="website" />
+
+      <link href="https://wacoder.github.io/theme/bootstrap.min.css" rel="stylesheet">
+      <link href="https://wacoder.github.io/theme/bootstrap.min.responsive.css" rel="stylesheet">
+      <link href="https://wacoder.github.io/theme/local.css" rel="stylesheet">
+      <link href="https://wacoder.github.io/theme/pygments.css" rel="stylesheet">
+      <link href='https://fonts.googleapis.com/css?family=Merriweather:300%7CRaleway%7COpen+Sans' rel='stylesheet' type='text/css'>
+      <link rel="stylesheet" href="https://wacoder.github.io/theme/font-awesome.min.css">
+      <link rel="stylesheet" href="https://wacoder.github.io/theme/style.css">
+      <link rel="stylesheet" href="https://wacoder.github.io/theme/tomorrow.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+<body>
+
+
+<div class="container">
+    <div class="content">
+    <div class="row">
+
+        <div class="span9">
+    <div class='article'>
+        <div class="content-title">
+            <h1>How backpropagation algorithem works in nerual network<sup id="fnref:1"><a class="footnote-ref" href="#fn:1" rel="footnote">1</a></sup></h1>
+            <div class= "well small">
+            July 06 2016
+
+            by <a class="url fn" href="https://wacoder.github.io/">wacoder</a>
+
+            Tags <a class="url fn" href="https://wacoder.github.io/tag/machine_learning.html">Machine Learning</a>
+            </div>
+</div>
+
+<div><p>The backpropagation algorithm was originally introduced in the 1970s, but its importance wasn't fully appreciated until a famous 1986 paper by
+            David Rumelhart et. al. Today, the backpropagation algorithm is the workhorse of neural network. This passage explains backpropagation algorithm mathematically.</p>
+      <p>Let's begin by with a notation which lets us refe to neural network in an unambiguous way. Our neural netowrk is shown in Figure: <center><img src="image/NN.PNG"></center></p>
+        <p>We will use <span class="math">\(\theta\)</span> to denote the weight of nerual network. <span class="math">\(\theta_{jk}^{(l)}\)</span> denote the wight for the connection from the <span class="math">\(k_{th}\)</span> neuron in the <span class="math">\(l\)</span> layer to the <span class="math">\(j_{th}\)</span> neuron in the <span class="math">\(l+1\)</span> layer. And we use <span class="math">\(a_j^l\)</span> for the activation of the <span class="math">\(j_{th}\)</span> neuron in the <span class="math">\(l_{th}\)</span> layer. <span class="math">\(g ()\)</span> is the sigmoid fucntion.</p>
+
+        <p>The cost function for neural network (without regularization) is</p>
+        <div class="math">\begin{equation}\label{Eqn:costfunction}
+          J(\theta) = \frac{1}{m}\sum^m_{i=1}\sum^K_{k=1}[-y^{(i)}_klog{((h_{\theta}(x^{(i)}))_k)}-(1-y^{(i)}_k)log{(1-(h_{\theta}(x^{(i)}))_k)}]
+        \end{equation}</div>
+        where <span class="math">\(K\)</span> is the possible lables.
+        <p>Backpropagation is about understanding how changing the weights in network chcanges the cost function. Untimately, this means computing the particial derivative <span class="math">\(\partial J/\partial \theta_{jk}^{l}\)</span>. We define the error <span class="math">\(\delta_j^l\)</span> of neuron <span class="math">\(j\)</span> in layer <span class="math">\(l\)</span> by</p>
+        <div class="math">\begin{equation}\label{Eqn:error}
+          \delta_j^l = \frac{\partial J(\theta)}{\partial z_j^l}
+        \end{equation}</div>
+        <p>Note that everything in (\ref{Eqn:error}) is easily computed. The exact form of <span class="math">\(\partial J/\partial \theta_{jk}^{l}\)</span>, will, of course, depend on the form of the cost function. However, provided the cost function (\ref{Eqn:costfunction}) is known there should be little trouble computing <span class="math">\(\partial J/\partial \theta_{jk}^{l}\)</span>. For example, for each output unit <span class="math">\(k\)</span> in layer 3 (the output layer) <span class="math">\(\delta_k^{(3)}=(a_k^{(3)}-y_k)\)</span>, for the hidden layer 2 <span class="math">\(\delta^{(2)}=((\theta^{(2)})^T\delta^{(3)}.*g'(z^{(2)})\)</span>. Therefore, the partial derivative <span class="math">\(\partial J/\partial \theta^{l}\)</span> is</p>
+        <div class="math">\begin{equation}\label{Eqn:derivative}
+          \frac{\partial J} {\partial \theta^{l}}= \delta^{(l+1)}(a^{(l)})^T
+        \end{equation}</div>
+
+
+
+
+
+<h3>References</h3>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p><em>How the backpropagation algorithm works</em>, <a href="http://neuralnetworksanddeeplearning.com/chap2.html">[online]</a>.&#160;<a class="footnote-backref" href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    var location_protocol = (false) ? 'https' : document.location.protocol;
+    if (location_protocol !== 'http' && location_protocol !== 'https') location_protocol = 'https:';
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = location_protocol + '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' }, Macros: {} }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script></div>
+
+
+    </div>
+        </div>
+
+        <div class="span3">
+
+            <div class="well" style="padding: 8px 0; background-color: #FFFFFF;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                Site Map
+                </li>
+
+              </div>
+              <nav class="container title h2-like">
+              <a href="https://wacoder.github.io/" title="all posts">Home</a>
+              </nav>
+
+
+              <nav class="container title h2-like">
+              <a href="https://wacoder.github.io/archives.html" title="all posts">Archives</a>
+              </nav>
+              <nav class="container title h2-like">
+              <a href="https://wacoder.github.io/tags.html" title="Categories">Tags</a>
+              </nav>
+
+            </ul>
+            </div>
+        </div>
+    </div>     </div>
+
+</div> <!-- /container -->
+</body>
+</html>
