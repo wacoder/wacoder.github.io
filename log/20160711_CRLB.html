@@ -1,0 +1,257 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Wacoder&#39;s Blog by wacoder</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="description" content="" />
+
+<meta name="keywords" content="">
+
+<meta property="og:locale" content="en-EN">
+
+
+<meta property="og:type" content="website" />
+
+      <link href="https://wacoder.github.io/theme/bootstrap.min.css" rel="stylesheet">
+      <link href="https://wacoder.github.io/theme/bootstrap.min.responsive.css" rel="stylesheet">
+      <link href="https://wacoder.github.io/theme/local.css" rel="stylesheet">
+      <link href="https://wacoder.github.io/theme/pygments.css" rel="stylesheet">
+      <link href='https://fonts.googleapis.com/css?family=Merriweather:300%7CRaleway%7COpen+Sans' rel='stylesheet' type='text/css'>
+      <link rel="stylesheet" href="https://wacoder.github.io/theme/font-awesome.min.css">
+      <link rel="stylesheet" href="https://wacoder.github.io/theme/style.css">
+      <link rel="stylesheet" href="https://wacoder.github.io/theme/tomorrow.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+<body>
+
+
+<div class="container">
+    <div class="content">
+    <div class="row">
+
+        <div class="span9">
+    <div class='article'>
+        <div class="content-title">
+            <h1>What is the Cramer-Rao Lower Bound?<sup id="fnref:1"><a class="footnote-ref" href="#fn:1" rel="footnote">1</a></sup> <sup id="fnref:2"><a class="footnote-ref" href="#fn:2" rel="footnote">2</a></sup></h1>
+            <div class= "well small">
+            July 11 2016
+
+            by <a class="url fn" href="https://wacoder.github.io/">wacoder</a>
+
+            Tags <a class="url fn" href="https://wacoder.github.io/tag/bayesian_estimation.html">Bayesian Estimation</a>
+            </div>
+</div>
+
+<div><p>In estimation theory and statistics, the Cramer-Rao lower bound (CRLB), named in honor of Harald Cramer and Calyampudi Rao who were among the first to derive it, expresses a lower bound on the variance of estimator of a deterministic parameter. The CRLB tells the best we can ever expect to be able to do (with an unbiased estimator).</p>
+
+
+  <h3>Statement</h3>
+      <p>Suppose <span class="math">\(\theta\)</span> is unknown deterministic parameter which is to be estimated from measurements <span class="math">\(x\)</span>, distributed according to some probability density function <span class="math">\(p(x;\theta)\)</span>. The variance of any unbiased estimator <span class="math">\(\hat{\theta}\)</span> of <span class="math">\(\theta\)</span> is then bounded by the reciprocal of the Fisher information <span class="math">\(I(\theta)\)</span>.</p>
+
+      <div class="math">\begin{equation}\label{Eqn:crlb}
+        var(\hat{\theta}) \geq \frac{1}{I(\theta)}
+      \end{equation}</div>
+      <p>where the Fisher information <span class="math">\(I(\theta)\)</span> is defined by</p>
+
+      <div class="math">\begin{equation}\label{Eqn:fisher}
+        I(\theta) = E[(\frac{\partial l(x;\theta)}{\partial \theta})^2] = -E[(\frac{\partial^2 l(x;\theta)}{\partial \theta^2}]
+      \end{equation}</div>
+    <p>and <span class="math">\(l(x;\theta)=ln(p(x;\theta))\)</span> is the natural logarithm of the likehihood function and <span class="math">\(E\)</span> denotes the expected value (over <span class="math">\(x\)</span>).</p>
+      <h3>Derivation</h3>
+      <p>Generally, given measurements <span class="math">\(x\)</span> we want to find a local maximum for <span class="math">\(p(x;\theta)\)</span> by guessing <span class="math">\(\theta\)</span> such that <span class="math">\(p(x;\theta)\)</span> is high and <span class="math">\(\frac{\partial}{\partial \theta}p(x;\theta)=0\)</span>. Since it is often prefereable to work with logartithm, we use the log likelihood function <span class="math">\(l(x:\theta)\)</span>. The score function is the derivative of the log likelihood function with respect to <span class="math">\(\theta\)</span>.</p>
+
+      <div class="math">\begin{equation}\label{Eqn:scorefunc}
+        s(x;\theta) = \frac{\partial}{\partial \theta}l(x;\theta) = \frac{1}{p(x;\theta)}\frac{\partial}{\partial \theta}p(x;\theta)
+      \end{equation}</div>
+      <p>To calculate the expected value of the score function, we integrate over all values of <span class="math">\(x\)</span>:</p>
+
+      <div class="math">\begin{align}
+        \begin{aligned}
+        E[s(x;\theta)]&amp;=\int_{x\in X}s(x;\theta)p(x;\theta)dx \nonumber\\
+        &amp;=\int_{x \in X} \frac{1}{p(x;\theta)} \frac{\partial}{\partial \theta} p(x;\theta) p(x;\theta) dx\\
+        &amp; = \int_{x \in X} \frac{\partial}{\partial \theta}p(x;\theta) dx\\
+        &amp; = \frac{\partial}{\partial \theta} \int_{x \in X} p(x;\theta)dx\\
+        &amp; = \frac{\partial}{\partial \theta} 1 = 0
+        \end{aligned}
+        \end{align}
+      </div>
+      <p>Since the expectation of the score function <span class="math">\(s(x;\theta)\)</span> is 0, the variance is simply: <span class="math">\(var[s(x;\theta)]=E[s^2(x;\theta)]\)</span>.</p>
+      <p>Given the unbiased estimator <span class="math">\(g(x)\)</span>:</p>
+      <div class="math">\begin{align*}
+        \begin{aligned}
+        \int g(x)p(x;\theta)dx &amp; = \theta\\
+        \frac{\partial}{\partial \theta} \int g(x)p(x;\theta)dx &amp; = 1\\
+        \int g(x) \frac{\partial}{\partial \theta} p(x;\theta) &amp; = 1\\
+        \int g(x) s(x;\theta) p(x;\theta) &amp; = 1\\
+        E(g(x)s(x;\theta))&amp; = 1
+        \end{aligned}
+        \end{align*}
+        <p>Consider the covariance of <span class="math">\(g(x)\)</span> and <span class="math">\(s(x;\theta)\)</span></p>
+        <div class="math">\begin{align*}
+          \begin{aligned}
+          cov[g(x), s(x;\theta)] &amp;= E[(g(x)-\theta)(s(x,\theta)-0)]\\
+           &amp; = E[g(x)s(x;\theta)-\theta s(x;\theta)]\\
+           &amp; = E[g(x)s(x;\theta)]\\
+          &amp; = 1
+          \end{aligned}
+          \end{align*}
+<p>Reminder, <span class="math">\(cov[v(x),w(x)]^2 \leq var[v(x)] var[w(x)]\)</span>. Therefore </p>
+<div class="math">\begin{align*}
+  \begin{aligned}
+  cov[g(x), s(x;\theta)]^2 = 1 &amp;\leq var[g(x)] var[s(x;\theta)]\\
+   var[g(x)]&amp; \geq \frac{1}{var[s(x;\theta)]}
+  \end{aligned}
+  \end{align*}
+  <p>To obtain <span class="math">\(var[s(x;\theta)]=-E[s^2(x;\theta)]\)</span>, we start with</p>
+  <div class="math">\begin{align*}
+    \begin{aligned}
+    \int_{x\in X}p(x;\theta)dx &amp;=1\\
+    \end{aligned}
+    \end{align*}
+    <p>we differentiate with respect to the parameter <span class="math">\(\theta\)</span></p>
+    <div class="math">\begin{align*}
+      \begin{aligned}
+    \frac{\partial}{\partial \theta} \int_{x\in X}p(x;\theta)dx&amp; =\int_{x\in X} \frac{\partial}{\partial \theta} p(x;\theta)dx =0\\
+      \end{aligned}
+      \end{align*}
+<p>we rewrite the above equation by dividing and multiplying by <span class="math">\(p(x;\theta)\)</span></p>
+<div class="math">\begin{align*}
+  \begin{aligned}
+\int_{x\in X} \frac{\partial}{\partial \theta} p(x;\theta) \frac{1}{p(x;\theta)}p(x;\theta)dx&amp;=0\\
+\int_{x\in X} \frac{\partial}{\partial \theta} l(x;\theta) p(x;\theta)dx&amp;=0\\
+  \end{aligned}
+  \end{align*}
+  <p>We take the derivative of the above equation with respect with parameter <span class="math">\(\theta\)</span></p>
+  <div class="math">\begin{align*}
+    \begin{aligned}
+  \int_{x\in X} \frac{\partial^2}{\partial \theta^2} l(x;\theta)p(x:\theta)dx+\int_{x\in X} \frac{\partial}{\partial \theta} l(x;\theta)\frac{\partial}{\partial \theta} l(x;\theta) p(x;\theta)dx&amp;=0\\
+    \end{aligned}
+    \end{align*}
+  <p>From the above equation, we could get</p>
+  <div class="math">\begin{align*}
+    \begin{aligned}
+  E[\frac{\partial^2}{\partial \theta^2} l(x;\theta)]+ E[s^2(x;\theta)]&amp;=0\\
+    \end{aligned}
+    \end{align*}
+<p>Finally, we get the Fisher information <span class="math">\(I(\theta\)</span></p>
+    <div class="math">\begin{align}
+      \begin{aligned}
+  E[s^2(x;\theta)] &amp;=-E[\frac{\partial^2}{\partial \theta^2} l(x;\theta)]
+      \end{aligned}
+      \end{align}
+
+
+
+<h3>References</h3>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p><em>The score function and Cramer-Rao lower bound</em>, <a href="http://cseweb.ucsd.edu/~elkan/291winter2005/lect09.pdf">[online]</a>.&#160;<a class="footnote-backref" href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p><em>Cramer-Rao lower bound: deriving the Fisher Information matrix</em>, <a href="https://statcatinthehat.wordpress.com/2014/08/13/cramer-rao-lower-bound-fisher-information-matrix/">[online]</a>.&#160;<a class="footnote-backref" href="#fnref:2" rev="footnote" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    var location_protocol = (false) ? 'https' : document.location.protocol;
+    if (location_protocol !== 'http' && location_protocol !== 'https') location_protocol = 'https:';
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = location_protocol + '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' }, Macros: {} }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script></div>
+
+
+    </div>
+        </div>
+
+        <div class="span3">
+
+            <div class="well" style="padding: 8px 0; background-color: #FFFFFF;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                Site Map
+                </li>
+
+              </div>
+              <nav class="container title h2-like">
+              <a href="https://wacoder.github.io/" title="all posts">Home</a>
+              </nav>
+
+
+              <nav class="container title h2-like">
+              <a href="https://wacoder.github.io/archives.html" title="all posts">Archives</a>
+              </nav>
+              <nav class="container title h2-like">
+              <a href="https://wacoder.github.io/tags.html" title="Categories">Tags</a>
+              </nav>
+
+            </ul>
+            </div>
+        </div>
+    </div>     </div>
+
+</div> <!-- /container -->
+</body>
+</html>
