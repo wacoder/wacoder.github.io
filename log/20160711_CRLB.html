@@ -95,7 +95,7 @@
         \int g(x) s(x;\theta) p(x;\theta) &amp; = 1\\
         E(g(x)s(x;\theta))&amp; = 1
         \end{aligned}
-        \end{align*}
+        \end{align*}</div>
         <p>Consider the covariance of <span class="math">\(g(x)\)</span> and <span class="math">\(s(x;\theta)\)</span></p>
         <div class="math">\begin{align*}
           \begin{aligned}
@@ -104,51 +104,51 @@
            &amp; = E[g(x)s(x;\theta)]\\
           &amp; = 1
           \end{aligned}
-          \end{align*}
+          \end{align*}</div>
 <p>Reminder, <span class="math">\(cov[v(x),w(x)]^2 \leq var[v(x)] var[w(x)]\)</span>. Therefore </p>
 <div class="math">\begin{align*}
   \begin{aligned}
   cov[g(x), s(x;\theta)]^2 = 1 &amp;\leq var[g(x)] var[s(x;\theta)]\\
    var[g(x)]&amp; \geq \frac{1}{var[s(x;\theta)]}
   \end{aligned}
-  \end{align*}
+  \end{align*}</div>
   <p>To obtain <span class="math">\(var[s(x;\theta)]=-E[s^2(x;\theta)]\)</span>, we start with</p>
   <div class="math">\begin{align*}
     \begin{aligned}
     \int_{x\in X}p(x;\theta)dx &amp;=1\\
     \end{aligned}
-    \end{align*}
+    \end{align*}</div>
     <p>we differentiate with respect to the parameter <span class="math">\(\theta\)</span></p>
     <div class="math">\begin{align*}
       \begin{aligned}
     \frac{\partial}{\partial \theta} \int_{x\in X}p(x;\theta)dx&amp; =\int_{x\in X} \frac{\partial}{\partial \theta} p(x;\theta)dx =0\\
       \end{aligned}
-      \end{align*}
+      \end{align*}</div>
 <p>we rewrite the above equation by dividing and multiplying by <span class="math">\(p(x;\theta)\)</span></p>
 <div class="math">\begin{align*}
   \begin{aligned}
 \int_{x\in X} \frac{\partial}{\partial \theta} p(x;\theta) \frac{1}{p(x;\theta)}p(x;\theta)dx&amp;=0\\
 \int_{x\in X} \frac{\partial}{\partial \theta} l(x;\theta) p(x;\theta)dx&amp;=0\\
   \end{aligned}
-  \end{align*}
+  \end{align*}</div>
   <p>We take the derivative of the above equation with respect with parameter <span class="math">\(\theta\)</span></p>
   <div class="math">\begin{align*}
     \begin{aligned}
   \int_{x\in X} \frac{\partial^2}{\partial \theta^2} l(x;\theta)p(x:\theta)dx+\int_{x\in X} \frac{\partial}{\partial \theta} l(x;\theta)\frac{\partial}{\partial \theta} l(x;\theta) p(x;\theta)dx&amp;=0\\
     \end{aligned}
-    \end{align*}
+    \end{align*}</div>
   <p>From the above equation, we could get</p>
   <div class="math">\begin{align*}
     \begin{aligned}
   E[\frac{\partial^2}{\partial \theta^2} l(x;\theta)]+ E[s^2(x;\theta)]&amp;=0\\
     \end{aligned}
-    \end{align*}
+    \end{align*}</div>
 <p>Finally, we get the Fisher information <span class="math">\(I(\theta\)</span></p>
     <div class="math">\begin{align}
       \begin{aligned}
   E[s^2(x;\theta)] &amp;=-E[\frac{\partial^2}{\partial \theta^2} l(x;\theta)]
       \end{aligned}
-      \end{align}
+      \end{align}</div>
 
 
 
