@@ -1,0 +1,240 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Wacoder&#39;s Blog by wacoder</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="description" content="" />
+
+<meta name="keywords" content="">
+
+<meta property="og:locale" content="en-EN">
+
+
+<meta property="og:type" content="website" />
+
+      <link href="https://wacoder.github.io/theme/bootstrap.min.css" rel="stylesheet">
+      <link href="https://wacoder.github.io/theme/bootstrap.min.responsive.css" rel="stylesheet">
+      <link href="https://wacoder.github.io/theme/local.css" rel="stylesheet">
+      <link href="https://wacoder.github.io/theme/pygments.css" rel="stylesheet">
+      <link href='https://fonts.googleapis.com/css?family=Merriweather:300%7CRaleway%7COpen+Sans' rel='stylesheet' type='text/css'>
+      <link rel="stylesheet" href="https://wacoder.github.io/theme/font-awesome.min.css">
+      <link rel="stylesheet" href="https://wacoder.github.io/theme/style.css">
+      <link rel="stylesheet" href="https://wacoder.github.io/theme/tomorrow.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+<body>
+
+
+<div class="container">
+    <div class="content">
+    <div class="row">
+
+        <div class="span9">
+    <div class='article'>
+        <div class="content-title">
+            <h1>Statistics Basic Cheatsheet<sup id="fnref:1"><a class="footnote-ref" href="#fn:1" rel="footnote">1</a></sup> <sup id="fnref:2"><a class="footnote-ref" href="#fn:2" rel="footnote">2</a></sup></h1>
+            <div class= "well small">
+            July 11 2016
+
+            by <a class="url fn" href="https://wacoder.github.io/">wacoder</a>
+
+            Tags <a class="url fn" href="https://wacoder.github.io/tag/basics.html">Basics</a>
+            </div>
+</div>
+
+<div><p>When you want to make sense of data around you every day, knowing how and when to use data analysis techniques and formulas of statistics will help.</p>
+
+  <h3>Understanding formulas for common statistics</h3>
+<p></p>
+<p>The most common descriptive statistics are as following, along with the formulas and short description of what each one measures. </p>
+  <h4>1. Population</h4>
+<p>The entire group one desires information about. </p>
+
+<h4>2. Sample</h4>
+<p>A subset of the population selected according to some scheme. </p>
+
+<h4>3. Mean</h4>
+<p>Used for measure of centre; affected by outliers </p>
+<table class="table">
+    <tbody>
+      <tr><td>Population mean</td><td>Sample mean</td></tr>
+        <tr>
+        <td><span class="math">\(\mu=\frac{1}{N}\sum_{i=1}^{N}x_i\)</span></td> <td><span class="math">\(\bar{x}=\frac{1}{n}\sum_{i=1}^{n}x_i\)</span></td>
+        </tr>
+
+    </tbody>
+</table>
+
+<h4>3. Variance</h4>
+<p>Used for measure of variation </p>
+<table class="table">
+    <tbody>
+      <tr><td>Population variance</td><td>Sample variance</td></tr>
+        <tr>
+        <td><span class="math">\(\delta^2=\frac{\sum(x-\mu)^2}{N}\)</span></td> <td><span class="math">\(s^2=\frac{\sum(x-\bar{x})^2}{n-1}\)</span></td>
+        </tr>
+
+    </tbody>
+</table>
+
+<h4>4. Correlation coefficient</h4>
+<p>Pearson correlation (r)</p>
+<p><span class="math">\(r=\frac{1}{n-1}\frac{\sum(x-\bar{x})(y-\bar{y})}{s_x s_y}\)</span></p>
+
+  <h3>Handling statistical hypothesis tests</h3>
+  <p></p>
+  <h4>1. Z-statistic</h4>
+  <p>Used when the standard deviation is known. The sample must be drawn from a normal distribution or have a sample size (n) at least 30.</p>
+  <p><span class="math">\(z=\frac{\bar{x}-\mu}{\delta/\sqrt{n}}\)</span>, where <span class="math">\(\mu\)</span> = population mean (either known or hypothesis under <span class="math">\(H_{o}\)</span>)</p>
+  <p><b>Confidence interval</b>-Interval within which we may consider a hypothesis tenable. Common confidence intervals are 90%, 95% and 99%.</p>
+  <p><span class="math">\(1-\alpha\)</span> confidence interval for <span class="math">\(\mu\)</span>:</p>
+  <p><span class="math">\(\bar{x}-z_{\alpha/2}(\delta/\sqrt{n})\leq\mu\leq\bar{x}+z_{\alpha/2}(\delta/\sqrt{n})\)</span></p>
+  <p>where <span class="math">\(z_{\alpha/2}\)</span> is the value of the standard normal variable z that puts <span class="math">\(\alpha/2\)</span> percent in each tail of the distribution.</p>
+
+  <p></p>
+  <h4>2. t-statistic</h4>
+  <p>Used when the standard deviation is unknown. use of Student's t distribution.</p>
+  <p><b>One sample</b>: tests whether the mean of a normally distributed population is different from a specified value.</p>
+  <p><span class="math">\(t=\frac{\bar{x}-\mu}{s/\sqrt{n}}\)</span>, where degree of freedom (df) = n-1</p>
+  <p><b>Two samples</b>: tests whether the means of two populations are significantly different from one another.</p>
+  <p><span class="math">\(t=\frac{\bar{x_1}-\bar{x_2}}{\sqrt{\frac{{s_1}^2}{n_1}+\frac{{s_2}^2}{n_2}}}\)</span>, where degree of freedom (df) = <span class="math">\(n_1+n_2-2\)</span></p>
+
+  <p></p>
+  <p></p>
+  <h4>3. Analysis of variance (ANOVA)</h4>
+  <p><span class="math">\(H_{o}:\mu_1=\mu_2=\mu_3\)</span></p>
+  <p><span class="math">\(H_{1}:\)</span>at least one pair of samples is significantly different.</p>
+  <p>Grand mean <span class="math">\(\bar{x}_G \)</span>(mean of sample mean)</p>
+  <p><span class="math">\(\bar{x}_G=\frac{\bar{x}_1+\dots+\bar{x}_k}{k}\)</span></p>
+  <p><b>Between-Group Variance</b>- reflects the magnitude of differences among the group means.</p>
+  <p><span class="math">\(BGV=\frac{\sum n_k(\bar{x}_k-\bar{x}_G)^2}{K-1}\)</span>, where <span class="math">\(n_k\)</span> is the sample size of each group, <span class="math">\(K\)</span> is the group number.</p>
+
+  <p><b>Within-Group Variance</b>- reflects the dispersion within each group.</p>
+  <p><span class="math">\(WGV=\frac{\sum\sum(x_i-\bar{x}_k)^2}{N-K}\)</span>, where <span class="math">\(N\)</span> is the total number of all groups, <span class="math">\(K\)</span> is the group number.</p>
+
+  <p><b>Use F-ratio</b>: <span class="math">\(F=\frac{BGV}{WGV}\)</span>, where degree of freedom is K-1 and N-K</p>
+
+  <p></p>
+  <p></p>
+  <h4>4. Chi-squared test</h4>
+  <p><b>For goodness of fit:</b>Checks whether or not an observed pattern of data fits some given distribution.</p>
+  <p><span class="math">\(\chi^2=\sum\frac{(O-E)^2}{E}\)</span>, where O is the observed value and E is the expected value</p>
+<p>Degrees of freedom = number of categories in the distribution -1</p>
+  <p></p>
+<p><b>For independence:</b>Checks whether two categorical variables are related or not.</p>
+<p><span class="math">\(\chi^2=\sum\frac{(O-E)^2}{E}\)</span>, where O is the observed value and E is the expected value.</p>
+<p>Degrees of freedom = (r-1)(c-1), r is the number of rows and c is the number of columns.</p>
+
+<h3>References</h3>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p><em>The score function and Cramer-Rao lower bound</em>, <a href="http://cseweb.ucsd.edu/~elkan/291winter2005/lect09.pdf">[online]</a>.&#160;<a class="footnote-backref" href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p><em>Cramer-Rao lower bound: deriving the Fisher Information matrix</em>, <a href="https://statcatinthehat.wordpress.com/2014/08/13/cramer-rao-lower-bound-fisher-information-matrix/">[online]</a>.&#160;<a class="footnote-backref" href="#fnref:2" rev="footnote" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    var location_protocol = (false) ? 'https' : document.location.protocol;
+    if (location_protocol !== 'http' && location_protocol !== 'https') location_protocol = 'https:';
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = location_protocol + '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' }, Macros: {} }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script></div>
+
+
+    </div>
+        </div>
+
+        <div class="span3">
+
+            <div class="well" style="padding: 8px 0; background-color: #FFFFFF;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                Site Map
+                </li>
+
+              </div>
+              <nav class="container title h2-like">
+              <a href="https://wacoder.github.io/" title="all posts">Home</a>
+              </nav>
+
+
+              <nav class="container title h2-like">
+              <a href="https://wacoder.github.io/archives.html" title="all posts">Archives</a>
+              </nav>
+              <nav class="container title h2-like">
+              <a href="https://wacoder.github.io/tags.html" title="Categories">Tags</a>
+              </nav>
+
+            </ul>
+            </div>
+        </div>
+    </div>     </div>
+
+</div> <!-- /container -->
+</body>
+</html>
