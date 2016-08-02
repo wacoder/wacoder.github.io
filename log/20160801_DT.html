@@ -56,19 +56,50 @@
   <h3>1. What is a Decision Tree? How does it work?</h3>
 <p></p>
 <p>Decision tree is a type of supervised learning algorithm (having a pre-defined target varialbe) that is mostly used in classification problems. It works for both categorical and continous input and output variables. In this technique, we split the population or sample into two or more homogeneous sets based on most significant splitter in input variables.</p>
+<p></p>
   <h4>Important terminology related to decision tree</h4>
 <p>
   <ul>
 <li><b>Leaf/Terminal Node</b>: nodes do not split is called leaf node.</li>
 <li><b>Decision Node</b>: decision node is a question on features, it branches out according to answers.</li>
+<li><b>Pruning</b>: when we remove the sub-nodes of a decison node, this process is called pruning. You can say opposite process of splitting.</li>
 </ul>
 </p>
 <center><img src="image/dt.PNG"></center>
+<p></p>
 
-<h4>2. Sample</h4>
-<p>A subset of the population selected according to some scheme. </p>
+<h4>Advantages</h4>
+<p>
+<ul>
+<li><b>Simple to understand and to interpret</b>. Trees can be visulized.</li>
+<li><b>Requires little data preparation</b>. It requires less data cleaning compared to some other modeling technique.</li>
+<li><b>Able to handle both numerical and categorical data</b>.</li>
+<li><b>No parametric method</b>. Decision tree is considered to be a non-parametric method. This means that decision tree have no asumption about space distribution and the classfier structure.</li>
+</ul>
+</p>
 
-<h4>3. Mean</h4>
+<h4>Disadvantages</h4>
+<p>
+<ul>
+<li><b>Overfitting</b>. Decision tree can create over complex tree that do not generalize the data well.</li>
+</ul>
+</p>
+<h3>2. How to build the tree?</h3>
+<p>The decision of making strategic splits heavily affects a tree's accuracy. There are many measures that can by used to determine the best way to split the samples. The creation of sub-nodes increases the homogeneity of resultant sub-nodes. In other words, we can say that purity of the node increases with respect to the target variables. Decision tree splits the nodes on all available variables and then selects the split which results in most homogeneous sub-nodes.</p>
+<p>Let <span class="math">\(p(i/t)\)</span> denote the fraction of samples belonging to class <span class="math">\(i\)</span> at a given node <span class="math">\(t\)</span>.</p>
+<p></p>
+<h4>Gini index</h4>
+<p>
+<ul>
+<li><b>a.</b> calcuate Gini for sub-nodes, using the formula.
+<span class="math">\(Gini(t)=1-\sum[p(i/t)]^2\)</span>
+</li>
+
+<li><b>b.</b> calculate Gini for split using weighted Gini score of each node of that split.  
+</li>
+</ul>
+</p>
+
 <p>Used for measure of centre; affected by outliers </p>
 <table class="table">
     <tbody>
