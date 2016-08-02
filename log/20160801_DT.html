@@ -95,81 +95,95 @@
 <span class="math">\(Gini(t)=1-\sum[p(i/t)]^2\)</span>
 </li>
 
-<li><b>b.</b> calculate Gini for split using weighted Gini score of each node of that split.  
+<li><b>b.</b> calculate Gini for split using weighted Gini score of each node of that split.
 </li>
 </ul>
 </p>
 
-<p>Used for measure of centre; affected by outliers </p>
-<table class="table">
-    <tbody>
-      <tr><td>Population mean</td><td>Sample mean</td></tr>
-        <tr>
-        <td><span class="math">\(\mu=\frac{1}{N}\sum_{i=1}^{N}x_i\)</span></td> <td><span class="math">\(\bar{x}=\frac{1}{n}\sum_{i=1}^{n}x_i\)</span></td>
-        </tr>
+<p></p>
+<h4>Information gain</h4>
+<p>
+<ul>
+<li><b>a.</b> calcuate entropy of parent node, using the formula.
+<span class="math">\(Entropy(t)=-\sum p(i/t)log_2p(i/t)\)</span>
+</li>
 
-    </tbody>
-</table>
+<li><b>b.</b> calculate entropy of each individual node of split and calculate weighted average of all sub-nodes available in split.
+</li>
+</ul>
+</p>
 
-<h4>3. Variance</h4>
-<p>Used for measure of variation </p>
-<table class="table">
-    <tbody>
-      <tr><td>Population variance</td><td>Sample variance</td></tr>
-        <tr>
-        <td><span class="math">\(\delta^2=\frac{\sum(x-\mu)^2}{N}\)</span></td> <td><span class="math">\(s^2=\frac{\sum(x-\bar{x})^2}{n-1}\)</span></td>
-        </tr>
+<p></p>
+<h4>Reduction in variance</h4>
+<p>
+Reduction in variance is an algorithm used for continuous target variables (regression problems).
+<ul>
+<li><b>a.</b> calcuate variance for each node.
+<span class="math">\(Variance=\frac{\sum (X-\bar{X})^2}{n}\)</span>
+</li>
 
-    </tbody>
-</table>
+<li><b>b.</b> calculate variance for each split as weighted average of each node variance.
+</li>
+</ul>
+</p>
 
-<h4>4. Correlation coefficient</h4>
-<p>Pearson correlation (r)</p>
-<p><span class="math">\(r=\frac{1}{n-1}\frac{\sum(x-\bar{x})(y-\bar{y})}{s_x s_y}\)</span></p>
+<h4>Missing values</h4>
+<p>Missing values are one of the curses of statistical models and analysis. Most procedure deal with them by refusing to deal with them -  incomplete observations are tossed out. </p>
+<p>Classification tree have a nice way to handling missing values by <b>surrogate</b> splits. To think about what to do if the splitted variable is not there. Classification trees tackle the issue by finding a replacement split. to find another split based on another variable, classification trees look at all the splits using all the other variables and search for the one yielding a division of training data points most similar to the optimal split.</p>
 
-  <h3>Handling statistical hypothesis tests</h3>
-  <p></p>
-  <h4>1. Z-statistic</h4>
-  <p>Used when the standard deviation is known. The sample must be drawn from a normal distribution or have a sample size (n) at least 30.</p>
-  <p><span class="math">\(z=\frac{\bar{x}-\mu}{\delta/\sqrt{n}}\)</span>, where <span class="math">\(\mu\)</span> = population mean (either known or hypothesis under <span class="math">\(H_{o}\)</span>)</p>
-  <p><b>Confidence interval</b>-Interval within which we may consider a hypothesis tenable. Common confidence intervals are 90%, 95% and 99%.</p>
-  <p><span class="math">\(1-\alpha\)</span> confidence interval for <span class="math">\(\mu\)</span>:</p>
-  <p><span class="math">\(\bar{x}-z_{\alpha/2}(\delta/\sqrt{n})\leq\mu\leq\bar{x}+z_{\alpha/2}(\delta/\sqrt{n})\)</span></p>
-  <p>where <span class="math">\(z_{\alpha/2}\)</span> is the value of the standard normal variable z that puts <span class="math">\(\alpha/2\)</span> percent in each tail of the distribution.</p>
+<h3>3. How to avoid overfitting in decision tree?</h3>
+<p>Overfitting is one of the key challenges faced while modeling decision tree. If there is no limit set of a decision tree, it will give 100% accuracy on training set because in the worset case it will end up making 1 leaf node for each observation. Thus, preventing overfitting is pivotal while modeling a decision tree and it can be done in 2 ways.</p>
 
-  <p></p>
-  <h4>2. t-statistic</h4>
-  <p>Used when the standard deviation is unknown. use of Student's t distribution.</p>
-  <p><b>One sample</b>: tests whether the mean of a normally distributed population is different from a specified value.</p>
-  <p><span class="math">\(t=\frac{\bar{x}-\mu}{s/\sqrt{n}}\)</span>, where degree of freedom (df) = n-1</p>
-  <p><b>Two samples</b>: tests whether the means of two populations are significantly different from one another.</p>
-  <p><span class="math">\(t=\frac{\bar{x_1}-\bar{x_2}}{\sqrt{\frac{{s_1}^2}{n_1}+\frac{{s_2}^2}{n_2}}}\)</span>, where degree of freedom (df) = <span class="math">\(n_1+n_2-2\)</span></p>
+<p>
+<ul>
+<li><b>a.</b> Setting constraints on tree size.
+</li>
+<li><b>b.</b> Tree pruning.
+</li>
+</ul>
+</p>
+<p></p>
+<h4>Setting constraints on tree size</h4>
+<p>
+<ul>
+<li><b>a. Minimum samples for a node split</b> Defines the minimum number of samples which are required in a node to be considered for splitting. It should be tuned using cross validation.
+</li>
+<li><b>b. Minimum samples for a terminal node</b> Defines the minimum samples required in a terminal node or leaf.
+</li>
+<li><b>c. Maximum depth of tree</b> The maximum depth of a tree. It should be tuned using cross validation.
+</li>
+<li><b>d. Maximum number of terminal nodes</b> The maximum number of terminal nodes or leaves in a tree. Can be defined in place of max_depth. Since binary tree are created, a depth of 'n' would produce a maaximum of 2^n leaves.
+</li>
+<li><b>e. Maximum features to consider for split</b> The number of features to consider while searching for a best split. These will be randomly selected. As a thumb-rule, square root of the total number of features works great but we should check upto 30%-40% of the total number of features.
+</li>
+</ul>
+</p>
+<p></p>
+<h4>Pruning the tree by cross-validation</h4>
 
-  <p></p>
-  <p></p>
-  <h4>3. Analysis of variance (ANOVA)</h4>
-  <p><span class="math">\(H_{o}:\mu_1=\mu_2=\mu_3\)</span></p>
-  <p><span class="math">\(H_{1}:\)</span>at least one pair of samples is significantly different.</p>
-  <p>Grand mean <span class="math">\(\bar{x}_G \)</span>(mean of sample mean)</p>
-  <p><span class="math">\(\bar{x}_G=\frac{\bar{x}_1+\dots+\bar{x}_k}{k}\)</span></p>
-  <p><b>Between-Group Variance</b>- reflects the magnitude of differences among the group means.</p>
-  <p><span class="math">\(BGV=\frac{\sum n_k(\bar{x}_k-\bar{x}_G)^2}{K-1}\)</span>, where <span class="math">\(n_k\)</span> is the sample size of each group, <span class="math">\(K\)</span> is the group number.</p>
+<p>
+<ul>
+<li><b>a.</b> Use recursive binary splitting to grow a large tree on the training data. Stopping only when each terminal node has fewer than some minimum number of observations (This is to get a fully graown tree).
+</li>
+<li><b>b.</b> Apply cost complexity pruning to the large tree in order to obatin a sequare of best subtree as a function of <span class="math">\(\alpha\)</span>.<br />
+  <br />
+<span class="math">\(R_\alpha(T)=R(T)+\alpha|T|\)</span>, we will define the tree complexity as <span class="math">\(|T|\)</span>, the number of terminal nodes in T. Let <span class="math">\(\alpha>0\)</span> be a real number called complexity parameter.
+</li>
+<li><b>c.</b> Use K-fold cross validation to choose <span class="math">\(\alpha\)</span>, for each <span class="math">\(k=1...K\)</span><br />
+  <br />
+<b>I</b>. Repeat step a and b on the <span class="math">\(\frac{K-1}{K}\)</span>th fraction of training data set excluding the <span class="math">\(K\)</span>th fold.<br />
+<b>II</b>. Evaluate the mean squared prediction error on the data in the left-out <span class="math">\(K\)</span>th fold as a function of <span class="math">\(\alpha\)</span>.<br />
+<br />
+Average the results, and pick <span class="math">\(\alpha\)</span> to minimize the average error.
+</li>
+<li><b>d.</b> Return the subtree from step b that corresponds to the choose value of <span class="math">\(\alpha\)</span>.</li>
+</ul>
+</p>
 
-  <p><b>Within-Group Variance</b>- reflects the dispersion within each group.</p>
-  <p><span class="math">\(WGV=\frac{\sum\sum(x_i-\bar{x}_k)^2}{N-K}\)</span>, where <span class="math">\(N\)</span> is the total number of all groups, <span class="math">\(K\)</span> is the group number.</p>
+<h3>3. What is random forest? and How it works?</h3>
+<center><img src="image/randomforest.PNG"></center>
 
-  <p><b>Use F-ratio</b>: <span class="math">\(F=\frac{BGV}{WGV}\)</span>, where degree of freedom is K-1 and N-K</p>
 
-  <p></p>
-  <p></p>
-  <h4>4. Chi-squared test</h4>
-  <p><b>For goodness of fit:</b>Checks whether or not an observed pattern of data fits some given distribution.</p>
-  <p><span class="math">\(\chi^2=\sum\frac{(O-E)^2}{E}\)</span>, where O is the observed value and E is the expected value</p>
-<p>Degrees of freedom = number of categories in the distribution -1</p>
-  <p></p>
-<p><b>For independence:</b>Checks whether two categorical variables are related or not.</p>
-<p><span class="math">\(\chi^2=\sum\frac{(O-E)^2}{E}\)</span>, where O is the observed value and E is the expected value.  </p>
-<p>Degrees of freedom = (r-1)(c-1), r is the number of rows and c is the number of columns.</p>
 
 
 <script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
