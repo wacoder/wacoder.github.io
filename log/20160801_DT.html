@@ -211,6 +211,45 @@ Average the results, and pick <span class="math">\(\alpha\)</span> to minimize t
 </ul>
 </p>
 
+<h3>3. What is boosted tree?</h3>
+<p>Idea: given a weak learner, run it multiple times on (reweighted) training data, then let the learned classifiers vote.</p>
+<p>On each iteration:</p>
+<dl>
+<li>
+  weight each training example by how incorrectly it was classified.
+</li>
+<li>Learn a hypothesis and a strength for this hypothsis</li>
+</dl>
+<p>Final classifier: a linear combination of the votes of the different classifiers weighted by their strength.</p>
+<p>Consider a weighted dataset:</p>
+<dl>
+  <li><span class="math">\(D(i)\)</span>: weight of <span class="math">\(i\)</span>th training example <span class="math">\((x^i,y^i)\)</span></li>
+  <li>Interpretation: <ul><li><span class="math">\(i\)</span>th training example counts as <span class="math">\(D(i)\)</span> examples.</li>
+  <li>If I were to "resample" data, I would get more samples of "heavier" data samples.</li></ul></li>
+</dl>
+<p></p>
+<font size="6" color = "red">Some data points are more equal than others!</font>
+<p></p>
+
+<ol>
+  <li>Given <span class="math">\((x_1,y_1),...,(x_m,y_m)\)</span>, where <span class="math">\(x_i \in X, y_i \in Y =\{-1,+1\}\). Initialize <span class="math">\(D_i(i)=1/m\)</span>.</li>
+  <li>For <span class="math">\(t = 1,...,T:\)</span>
+    <ul><li>Train weak learner using distribution <span class="math">\(D_t\)</span>.</li>
+        <li>Get weak classifier <span class="math">\(h_t: X \to R\)</span>.</li>
+        <li>Choose <span class="math">\(\alpha_t \in R\)</span>.</li>
+        <li>Update: </br><span class="math">\(D_{t+1}(i)=\frac{D_t(i)exp(-\alpha_t y_i h_t(x_i))}{Z_t}\)</span></br>
+        where <span class="math">\(Z_t \in R\)</span> is a normalization factor </br>
+        <span class="math">\(Z_t =\sum^{m}_{i=1}D_t(i)exp(-\alpha_t y_i h_t(x_i))\)</span>
+      </li></ul>
+</li>
+<li>Output the final classifier:</br>
+<span class="math">\(H(x)=sign(\sum^T_{t=1}\alpha_t h_t(x))\)</span></li>
+</ol>
+
+<ul>
+  <li><span class="math">\(\alpha_t = \frac{1}{2}ln(\frac{1-\epsilon_t}{\epsilon_t})\)</span></br>
+  <span class="math">\(\epsilon_t = \sum^m_{i=1}D_t(i)\delta(h_t(x_i)\neq y_i)\)</span></li>
+</ul>
 
 <script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
     var align = "center",
