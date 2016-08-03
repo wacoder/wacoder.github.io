@@ -185,9 +185,31 @@ Average the results, and pick <span class="math">\(\alpha\)</span> to minimize t
 <p>The literally meaning of word 'ensemble' is group. Ensemble methods involve group of predictive models to achieve a better accuracy and model stability. Ensemble methods are known to impart supreme boost to tree based models.</p>
 <p>Bagging is technique used to reduce the variance of our predictions by combining the result of multiple classifiers modeled on different sub-samples of the same data set.</p>
 <p>Random forest is considered to be a panacea of all data sceience problems. Random forest is a versatile learning method capable of performing both regression and classification tasks. It is a type of ensemble learning method, where a group of weak models combine to form a powerful model.</p>
+<p></p>
 <center><img src="image/randomforest.png"></center>
 
+<p>
+<ul>
+<li><b>a.</b> Draw <span class="math">\(n_{tree}\)</span> bootstrap samples from the original data.
+</li>
+<li><b>b.</b> For each of the bootstrap samples, grow an <b>unpruned</b> classification or regression tree, with the following modification: at each node, rather than choosing the best split among all predictors, randomly sample <span class="math">\(m_{try}\)</span> of the predictors and choose the best split from among those variables. (Bagging can be thought of as the special case of random forest obtained when <span class="math">\(m_{try}=p\)</span>, the number of predictors.)
+</li>
+<li><b>c.</b> Predict new data by aggregating the predictions of the <span class="math">\(n_{tree}\)</span> trees (i.e. majority votes for classification, average for regression).
+</li>
+<li><b>d.</b> Return the subtree from step b that corresponds to the choose value of <span class="math">\(\alpha\)</span>.</li>
+</ul>
+</p>
 
+<p>An estimate of the error rate can be obtained based on the training data, by the following:</p>
+<p>
+<ul>
+<li><b>a.</b> At each bootstrap iteration, predict the data not in the bootstrap sample (what Breiman calls "out-of-bag" or OOB) using the tree grown with the bootstrap sample.
+</li>
+<li><b>b.</b> Aggregate the OOB predictions. (On average, each data point would be OOB around 36% fo the times, so aggregate these predictions). Calculate the error rate, and call it the OOB estimate of error rate.
+</li>
+
+</ul>
+</p>
 
 
 <script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
