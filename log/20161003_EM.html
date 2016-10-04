@@ -1,0 +1,354 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Wacoder&#39;s Blog by wacoder</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="description" content="" />
+
+<meta name="keywords" content="">
+
+<meta property="og:locale" content="en-EN">
+
+
+<meta property="og:type" content="website" />
+
+      <link href="https://wacoder.github.io/theme/bootstrap.min.css" rel="stylesheet">
+      <link href="https://wacoder.github.io/theme/bootstrap.min.responsive.css" rel="stylesheet">
+      <link href="https://wacoder.github.io/theme/local.css" rel="stylesheet">
+      <link href="https://wacoder.github.io/theme/pygments.css" rel="stylesheet">
+      <link href='https://fonts.googleapis.com/css?family=Merriweather:300%7CRaleway%7COpen+Sans' rel='stylesheet' type='text/css'>
+      <link rel="stylesheet" href="https://wacoder.github.io/theme/font-awesome.min.css">
+      <link rel="stylesheet" href="https://wacoder.github.io/theme/style.css">
+      <link rel="stylesheet" href="https://wacoder.github.io/theme/tomorrow.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-82805099-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  </head>
+<body>
+
+
+<div class="container">
+    <div class="content">
+    <div class="row">
+
+        <div class="span9">
+    <div class='article'>
+        <div class="content-title">
+            <h1>Mixture model and EM</h1>
+            <div class= "well small">
+            July 11 2016
+
+            by <a class="url fn" href="https://wacoder.github.io/">wacoder</a>
+
+            Tags <a class="url fn" href="https://wacoder.github.io/tag/machine_learning.html">Machine Learning</a>
+            </div>
+</div>
+<div><p><b>Desicion Tree</b>s are a non-parametric supervised learning method used for classifcation and regression. The goal is to create a model that predicts the value of a target variable by learning simple decision rules inferred from the data.</p>
+
+  <h3>1. What is a Decision Tree? How does it work?</h3>
+<p></p>
+<p>Decision tree is a type of supervised learning algorithm (having a pre-defined target varialbe) that is mostly used in classification problems. It works for both categorical and continous input and output variables. In this technique, we split the population or sample into two or more homogeneous sets based on most significant splitter in input variables.</p>
+<p></p>
+  <h4>Important terminology related to decision tree</h4>
+<p>
+  <ul>
+<li><b>Leaf/Terminal Node</b>: nodes do not split is called leaf node.</li>
+<li><b>Decision Node</b>: decision node is a question on features, it branches out according to answers.</li>
+<li><b>Pruning</b>: when we remove the sub-nodes of a decison node, this process is called pruning. You can say opposite process of splitting.</li>
+</ul>
+</p>
+<center><img src="image/dt.PNG"></center>
+<p></p>
+
+<h4>Advantages</h4>
+<p>
+<ul>
+<li><b>Simple to understand and to interpret</b>. Trees can be visulized.</li>
+<li><b>Requires little data preparation</b>. It requires less data cleaning compared to some other modeling technique.</li>
+<li><b>Able to handle both numerical and categorical data</b>.</li>
+<li><b>No parametric method</b>. Decision tree is considered to be a non-parametric method. This means that decision tree have no asumption about space distribution and the classfier structure.</li>
+</ul>
+</p>
+
+<h4>Disadvantages</h4>
+<p>
+<ul>
+<li><b>Overfitting</b>. Decision tree can create over complex tree that do not generalize the data well.</li>
+</ul>
+</p>
+<h3>2. How to build the tree?</h3>
+<p>The decision of making strategic splits heavily affects a tree's accuracy. There are many measures that can by used to determine the best way to split the samples. The creation of sub-nodes increases the homogeneity of resultant sub-nodes. In other words, we can say that purity of the node increases with respect to the target variables. Decision tree splits the nodes on all available variables and then selects the split which results in most homogeneous sub-nodes.</p>
+<p>Let <span class="math">\(p(i/t)\)</span> denote the fraction of samples belonging to class <span class="math">\(i\)</span> at a given node <span class="math">\(t\)</span>.</p>
+<p></p>
+<h4>Gini index</h4>
+<p>
+<ul>
+<li><b>a.</b> calcuate Gini for sub-nodes, using the formula.
+<span class="math">\(Gini(t)=1-\sum[p(i/t)]^2\)</span>
+</li>
+
+<li><b>b.</b> calculate Gini for split using weighted Gini score of each node of that split.
+</li>
+</ul>
+</p>
+
+<p></p>
+<h4>Information gain</h4>
+<p>
+<ul>
+<li><b>a.</b> calcuate entropy of parent node, using the formula.
+<span class="math">\(Entropy(t)=-\sum p(i/t)log_2p(i/t)\)</span>
+</li>
+
+<li><b>b.</b> calculate entropy of each individual node of split and calculate weighted average of all sub-nodes available in split.
+</li>
+</ul>
+</p>
+
+<p></p>
+<h4>Reduction in variance</h4>
+<p>
+Reduction in variance is an algorithm used for continuous target variables (regression problems).
+<ul>
+<li><b>a.</b> calcuate variance for each node.
+<span class="math">\(Variance=\frac{\sum (X-\bar{X})^2}{n}\)</span>
+</li>
+
+<li><b>b.</b> calculate variance for each split as weighted average of each node variance.
+</li>
+</ul>
+</p>
+
+<h4>Missing values</h4>
+<p>Missing values are one of the curses of statistical models and analysis. Most procedure deal with them by refusing to deal with them -  incomplete observations are tossed out. </p>
+<p>Classification tree have a nice way to handling missing values by <b>surrogate</b> splits. To think about what to do if the splitted variable is not there. Classification trees tackle the issue by finding a replacement split. to find another split based on another variable, classification trees look at all the splits using all the other variables and search for the one yielding a division of training data points most similar to the optimal split.</p>
+
+<h3>3. How to avoid overfitting in decision tree?</h3>
+<p>Overfitting is one of the key challenges faced while modeling decision tree. If there is no limit set of a decision tree, it will give 100% accuracy on training set because in the worset case it will end up making 1 leaf node for each observation. Thus, preventing overfitting is pivotal while modeling a decision tree and it can be done in 2 ways.</p>
+
+<p>
+<ul>
+<li><b>a.</b> Setting constraints on tree size.
+</li>
+<li><b>b.</b> Tree pruning.
+</li>
+</ul>
+</p>
+<p></p>
+<h4>Setting constraints on tree size</h4>
+<p>
+<ul>
+<li><b>a. Minimum samples for a node split</b> Defines the minimum number of samples which are required in a node to be considered for splitting. It should be tuned using cross validation.
+</li>
+<li><b>b. Minimum samples for a terminal node</b> Defines the minimum samples required in a terminal node or leaf.
+</li>
+<li><b>c. Maximum depth of tree</b> The maximum depth of a tree. It should be tuned using cross validation.
+</li>
+<li><b>d. Maximum number of terminal nodes</b> The maximum number of terminal nodes or leaves in a tree. Can be defined in place of max_depth. Since binary tree are created, a depth of 'n' would produce a maaximum of 2^n leaves.
+</li>
+<li><b>e. Maximum features to consider for split</b> The number of features to consider while searching for a best split. These will be randomly selected. As a thumb-rule, square root of the total number of features works great but we should check upto 30%-40% of the total number of features.
+</li>
+</ul>
+</p>
+<p></p>
+<h4>Pruning the tree by cross-validation</h4>
+
+<p>
+<ul>
+<li><b>a.</b> Use recursive binary splitting to grow a large tree on the training data. Stopping only when each terminal node has fewer than some minimum number of observations (This is to get a fully graown tree).
+</li>
+<li><b>b.</b> Apply cost complexity pruning to the large tree in order to obatin a sequare of best subtree as a function of <span class="math">\(\alpha\)</span>.<br />
+  <br />
+<span class="math">\(R_\alpha(T)=R(T)+\alpha|T|\)</span>, we will define the tree complexity as <span class="math">\(|T|\)</span>, the number of terminal nodes in T. Let <span class="math">\(\alpha>0\)</span> be a real number called complexity parameter.
+</li>
+<li><b>c.</b> Use K-fold cross validation to choose <span class="math">\(\alpha\)</span>, for each <span class="math">\(k=1...K\)</span><br />
+  <br />
+<b>I</b>. Repeat step a and b on the <span class="math">\(\frac{K-1}{K}\)</span>th fraction of training data set excluding the <span class="math">\(K\)</span>th fold.<br />
+<b>II</b>. Evaluate the mean squared prediction error on the data in the left-out <span class="math">\(K\)</span>th fold as a function of <span class="math">\(\alpha\)</span>.<br />
+<br />
+Average the results, and pick <span class="math">\(\alpha\)</span> to minimize the average error.
+</li>
+<li><b>d.</b> Return the subtree from step b that corresponds to the choose value of <span class="math">\(\alpha\)</span>.</li>
+</ul>
+</p>
+
+<h3>3. What is random forest? and How it works?</h3>
+
+<p>The literally meaning of word 'ensemble' is group. Ensemble methods involve group of predictive models to achieve a better accuracy and model stability. Ensemble methods are known to impart supreme boost to tree based models.</p>
+<p>Bagging is technique used to reduce the variance of our predictions by combining the result of multiple classifiers modeled on different sub-samples of the same data set.</p>
+<p>Random forest is considered to be a panacea of all data sceience problems. Random forest is a versatile learning method capable of performing both regression and classification tasks. It is a type of ensemble learning method, where a group of weak models combine to form a powerful model.</p>
+<p></p>
+<center><img src="image/randomforest.png"></center>
+
+<p>
+<ul>
+<li><b>a.</b> Draw <span class="math">\(n_{tree}\)</span> bootstrap samples from the original data.
+</li>
+<li><b>b.</b> For each of the bootstrap samples, grow an <b>unpruned</b> classification or regression tree, with the following modification: at each node, rather than choosing the best split among all predictors, randomly sample <span class="math">\(m_{try}\)</span> of the predictors and choose the best split from among those variables. (Bagging can be thought of as the special case of random forest obtained when <span class="math">\(m_{try}=p\)</span>, the number of predictors.)
+</li>
+<li><b>c.</b> Predict new data by aggregating the predictions of the <span class="math">\(n_{tree}\)</span> trees (i.e. majority votes for classification, average for regression).
+</li>
+<li><b>d.</b> Return the subtree from step b that corresponds to the choose value of <span class="math">\(\alpha\)</span>.</li>
+</ul>
+</p>
+
+<p>An estimate of the error rate can be obtained based on the training data, by the following:</p>
+<p>
+<ul>
+<li><b>a.</b> At each bootstrap iteration, predict the data not in the bootstrap sample (what Breiman calls "out-of-bag" or OOB) using the tree grown with the bootstrap sample.
+</li>
+<li><b>b.</b> Aggregate the OOB predictions. (On average, each data point would be OOB around 36% fo the times, so aggregate these predictions). Calculate the error rate, and call it the OOB estimate of error rate.
+</li>
+
+</ul>
+</p>
+
+<h3>3. What is boosted tree?</h3>
+<p>Idea: given a weak learner, run it multiple times on (reweighted) training data, then let the learned classifiers vote.</p>
+<p>On each iteration:</p>
+<dl>
+<li>
+  weight each training example by how incorrectly it was classified.
+</li>
+<li>Learn a hypothesis and a strength for this hypothsis</li>
+</dl>
+<p>Final classifier: a linear combination of the votes of the different classifiers weighted by their strength.</p>
+<p>Consider a weighted dataset:</p>
+<dl>
+  <li><span class="math">\(D(i)\)</span>: weight of <span class="math">\(i\)</span>th training example <span class="math">\((x^i,y^i)\)</span></li>
+  <li>Interpretation: <ul><li><span class="math">\(i\)</span>th training example counts as <span class="math">\(D(i)\)</span> examples.</li>
+  <li>If I were to "resample" data, I would get more samples of "heavier" data samples.</li></ul></li>
+</dl>
+<p></p>
+<font size="6" color = "red">Some data points are more equal than others!</font>
+<p></p>
+
+<ol>
+  <li>Given <span class="math">\((x_1,y_1),...,(x_m,y_m)\)</span>, where <span class="math">\(x_i \in X, y_i \in Y =\{-1,+1\}\). Initialize <span class="math">\(D_i(i)=1/m\)</span>.</li>
+  <li>For <span class="math">\(t = 1,...,T:\)</span>
+    <ul><li>Train weak learner using distribution <span class="math">\(D_t\)</span>.</li>
+        <li>Get weak classifier <span class="math">\(h_t: X \to R\)</span>.</li>
+        <li>Choose <span class="math">\(\alpha_t \in R\)</span>.</li>
+        <li>Update: </br><span class="math">\(D_{t+1}(i)=\frac{D_t(i)exp(-\alpha_t y_i h_t(x_i))}{Z_t}\)</span></br>
+        where <span class="math">\(Z_t \in R\)</span> is a normalization factor </br>
+        <span class="math">\(Z_t =\sum^{m}_{i=1}D_t(i)exp(-\alpha_t y_i h_t(x_i))\)</span>
+      </li></ul>
+</li>
+<li>Output the final classifier:</br>
+<span class="math">\(H(x)=sign(\sum^T_{t=1}\alpha_t h_t(x))\)</span></li>
+</ol>
+
+<ul>
+  <li><span class="math">\(\alpha_t = \frac{1}{2}ln(\frac{1-\epsilon_t}{\epsilon_t})\)</span></br>
+  <span class="math">\(\epsilon_t = \sum^m_{i=1}D_t(i)\delta(h_t(x_i)\neq y_i)\)</span></li>
+</ul>
+
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    var location_protocol = (false) ? 'https' : document.location.protocol;
+    if (location_protocol !== 'http' && location_protocol !== 'https') location_protocol = 'https:';
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = location_protocol + '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' }, Macros: {} }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script></div>
+
+
+    </div>
+        </div>
+
+        <div class="span3">
+
+            <div class="well" style="padding: 8px 0; background-color: #FFFFFF;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                Site Map
+                </li>
+
+              </div>
+              <nav class="container title h2-like">
+              <a href="https://wacoder.github.io/" title="all posts">Home</a>
+              </nav>
+
+
+              <nav class="container title h2-like">
+              <a href="https://wacoder.github.io/archives.html" title="all posts">Archives</a>
+              </nav>
+              <nav class="container title h2-like">
+              <a href="https://wacoder.github.io/tags.html" title="Categories">Tags</a>
+              </nav>
+
+            </ul>
+            </div>
+        </div>
+    </div>     </div>
+
+</div> <!-- /container -->
+</body>
+</html>
