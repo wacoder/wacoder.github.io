@@ -8456,15 +8456,15 @@ label {
 }
 /* Flexible box model classes */
 /* Taken from Alex Russell http://infrequently.org/2009/08/css-3-progress/ */
-/* This file is a compatability layer.  It allows the usage of flexible box 
+/* This file is a compatability layer.  It allows the usage of flexible box
 model layouts accross multiple browsers, including older browsers.  The newest,
 universal implementation of the flexible box model is used when available (see
-`Modern browsers` comments below).  Browsers that are known to implement this 
+`Modern browsers` comments below).  Browsers that are known to implement this
 new spec completely include:
 
     Firefox 28.0+
     Chrome 29.0+
-    Internet Explorer 11+ 
+    Internet Explorer 11+
     Opera 17.0+
 
 Browsers not listed, including Safari, are supported via the styling under the
@@ -11214,7 +11214,7 @@ div#pager .ui-resizable-handle {
   background: #f7f7f7;
   border-top: 1px solid #cfcfcf;
   border-bottom: 1px solid #cfcfcf;
-  /* This injects handle bars (a short, wide = symbol) for 
+  /* This injects handle bars (a short, wide = symbol) for
         the resize handle. */
 }
 div#pager .ui-resizable-handle::after {
@@ -11649,7 +11649,7 @@ ul.typeahead-list > li > a {
 .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
     </style>
 <style type="text/css">
-    
+
 /* Temporary definitions which will become obsolete with Notebook release 5.0 */
 .ansi-black-fg { color: #3E424D; }
 .ansi-black-bg { background-color: #3E424D; }
@@ -11705,14 +11705,14 @@ div#notebook {
   div.cell {
     display: block;
     page-break-inside: avoid;
-  } 
-  div.output_wrapper { 
-    display: block;
-    page-break-inside: avoid; 
   }
-  div.output { 
+  div.output_wrapper {
     display: block;
-    page-break-inside: avoid; 
+    page-break-inside: avoid;
+  }
+  div.output {
+    display: block;
+    page-break-inside: avoid;
   }
 }
 </style>
@@ -11839,7 +11839,7 @@ p(x^{(i)}|x^{(i-1)}\cdots x^{(1)}) = T(x^i|x^{(i-1)})
 
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">):</span>
     <span class="n">Q</span><span class="p">[</span><span class="n">i</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">S</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">matrix_power</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">i</span><span class="p">))</span>
-    
+
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">1.1</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">((</span><span class="s1">&#39;H&#39;</span><span class="p">,</span><span class="s1">&#39;S&#39;</span><span class="p">,</span><span class="s1">&#39;D&#39;</span><span class="p">),</span><span class="n">loc</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
@@ -12292,7 +12292,7 @@ DKhERERElCr/D6NTvBKVK9QuAAAAAElFTkSuQmCC
 </ul>
 </li>
 <li>Aperiodicity: The chain should not get trapped in circle. </li>
-<li>Invariance: 
+<li>Invariance:
 \begin{equation}
 p(x^{(i)})=\sum_{x^{(i-1)}}p(x^{(i-1)})T(x^{(i)}|x^{(i-1)})
 \end{equation}</li>
@@ -12323,7 +12323,7 @@ $x^{(i+1)}=x^*$</li>
 </ul>
 </li>
 </ul>
-<p>Note that if the transition probability is symmetric $q(x^*|x^{(i)})=q(x^{(i)}|x^*)$ then the acceptance probability becomes 
+<p>Note that if the transition probability is symmetric $q(x^*|x^{(i)})=q(x^{(i)}|x^*)$ then the acceptance probability becomes
 \begin{equation}
 A(x,x^<em>) = min[1, \frac{p(x^</em>)}{p(x)}]
 \end{equation}
@@ -12367,18 +12367,18 @@ x^* \sim N(x, 0.6)
 <span class="k">while</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">:</span>
     <span class="n">u</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">x_pot</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">x_now</span><span class="p">,</span><span class="n">scale</span> <span class="o">=</span> <span class="mf">0.6</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    
+
     <span class="k">while</span> <span class="n">x_pot</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">x_pot</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">x_pot</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">x_now</span><span class="p">,</span><span class="n">scale</span> <span class="o">=</span> <span class="mf">0.6</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    
+
     <span class="k">if</span> <span class="n">u</span> <span class="o">&lt;</span> <span class="n">p</span><span class="p">(</span><span class="n">x_pot</span><span class="p">)</span><span class="o">/</span><span class="n">p</span><span class="p">(</span><span class="n">x_now</span><span class="p">):</span>
         <span class="n">x</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_pot</span>
         <span class="n">x_now</span> <span class="o">=</span> <span class="n">x_pot</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">x</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_now</span>
     <span class="n">k</span><span class="o">+=</span><span class="mi">1</span>
-    
-<span class="n">x_bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>    
+
+<span class="n">x_bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.4</span><span class="p">,</span><span class="n">normed</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;MCMC distribution&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_bins</span><span class="p">,</span><span class="n">p</span><span class="p">(</span><span class="n">x_bins</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;True distribution&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
@@ -12866,7 +12866,7 @@ QmCC
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="The-normal-distribution">The normal distribution<a class="anchor-link" href="#The-normal-distribution">&#182;</a></h2><p>Sample from a normal distribution using Metropolis algorithm with a proposal distribution 
+<h2 id="The-normal-distribution">The normal distribution<a class="anchor-link" href="#The-normal-distribution">&#182;</a></h2><p>Sample from a normal distribution using Metropolis algorithm with a proposal distribution
 \begin{equation}
 x^* \sim U(x-\delta, x+\delta)
 \end{equation}
@@ -12892,13 +12892,13 @@ where $\delta=0.5$ is the random walk.</p>
 <span class="k">while</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">:</span>
     <span class="n">x_pot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">x_now</span><span class="o">-</span><span class="n">delta</span><span class="p">,</span><span class="n">x_now</span><span class="o">+</span><span class="n">delta</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">u</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">uniform</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-    
+
     <span class="k">if</span> <span class="n">u</span> <span class="o">&lt;</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x_pot</span><span class="p">)</span><span class="o">/</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x_now</span><span class="p">):</span>
         <span class="n">x</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_pot</span>
         <span class="n">x_now</span> <span class="o">=</span> <span class="n">x_pot</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">x</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_now</span>
-        
+
     <span class="n">k</span><span class="o">+=</span><span class="mi">1</span>
 </pre></div>
 
